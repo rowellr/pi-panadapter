@@ -72,7 +72,6 @@ INFO_CYCLE = 8      # Display frames per help info update
 
 opt = options.opt   # Get option object from options module
 
-
 # print list of parameters to console.
 print "identification:", opt.ident
 print "source        :", opt.source
@@ -281,8 +280,11 @@ WF_LINES = 100                      # How many lines to use in the waterfall
 
 # Initialize pygame (pg)
 # We should not use pg.init(), because we don't want pg audio functions.
+# We also shut off the mouse pointer
 pg.display.init()
 pg.font.init()
+pg.mouse.set_visible(False) # set false to remove the cursor from the screen, not needed why have it.
+
 
 # Define the main window surface
 surf_main = pg.display.set_mode(SCREEN_SIZE, SCREEN_MODE)
@@ -421,6 +423,7 @@ nframe = 0
 t_frame0 = time.time()
 led_overflow_ct = 0
 startqueue = True
+
 while True:
 
     nframe += 1                 # keep track of loop count FWIW

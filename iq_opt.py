@@ -124,12 +124,12 @@ op.set_defaults(
     size                    = 480,      # size of FFT --> freq. resolution
     skip                    = 0,        # if not =0, skip some input data
     source_rtl              = False,    # Use sound card, not RTL-SDR input
-    sp_min                  =-110,      # dB relative to clipping, at bottom of grid
-    sp_max                  =-50,       # dB relative to clipping, at top of grid
-    v_min                   =-120,      # palette starts at this level
+    sp_min                  =-100,      # dB relative to clipping, at bottom of grid
+    sp_max                  =-40,       # dB relative to clipping, at top of grid
+    v_min                   =-100,      # palette starts at this level
     v_max                   =-40,       # palette ends at this level
     waterfall               = True,    # Using waterfall? T/F
-    waterfall_accumulation  = 4,        # No. of spectra per waterfall line
+    waterfall_accumulation  = 3,        # No. of spectra per waterfall line
     waterfall_palette       = 2         # choose a waterfall color scheme
     )
 

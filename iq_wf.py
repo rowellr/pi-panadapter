@@ -33,9 +33,7 @@ def palette_color(palette, val, vmin0, vmax0):
         input: value of data, minimum value, maximum value for transform
         return: pygame color tuple
     """
-    waterfall_colours = [(0, 0, 255), (0, 255, 0), (255, 0, 0)]  # [black, BLUE, GREEN, RED, white]
-    f = (float(val) - vmin0) / (vmax0 - vmin0)     # btw 0 and 1.0
-    f *= 2
+    f = 2 * (float(val) - vmin0) / (vmax0 - vmin0)     # btw 0 and 1.0
     f = min(1., max(0., f))
     if palette == 1:
         g, b = 0, 0
@@ -54,6 +52,10 @@ def palette_color(palette, val, vmin0, vmax0):
         r = bright * 128 *(1 + math.cos(tpi*f))
         g = bright * 128 *(1 + math.cos(tpi*f + tpi/3))
         b = bright * 128 *(1 + math.cos(tpi*f + 2*tpi/3))
+    elif palette == 3:
+        b = int(max(0, 255*(1 - f)))
+        r = int(max(0, 255*(f - 1)))
+        g = 255 - b - r
     else:
         print "Invalid palette requested!"
         sys.exit()
