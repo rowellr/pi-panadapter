@@ -101,7 +101,7 @@ op.add_option("--waterfall_palette", action="store", type="int", dest="waterfall
 
 # The following are the default values which are used if not specified in the
 # command line.  You may want to edit them to be close to your normal operating needs.
-DEF_SAMPLE_RATE = 48000
+DEF_SAMPLE_RATE = 96000
 op.set_defaults(
     buffers                 = 12,       # no. buffers in sample chunk (RPi-40)
     control_si570           = False,    # normally, talk to RTL or Hamlib for freq info
@@ -117,18 +117,18 @@ op.set_defaults(
     lcd4_brightness         = 75,       # brightness 0 - 100
     pulse                   = 10,       # pulse clip threshold
     rev_iq                  = False,    # Reverse I & Q
-    rtl_frequency           = 146.e6,   # RTL center freq. Hz
+    rtl_frequency           = 147.e6,   # RTL center freq. Hz
     rtl_gain                = 0,        # auto
     sample_rate             = DEF_SAMPLE_RATE,    # (stereo) frames/second (Hz)
     si570_frequency         = 7050.0,   # initial freq. for Si570 LO.
-    size                    = 384,      # size of FFT --> freq. resolution
+    size                    = 480,      # size of FFT --> freq. resolution
     skip                    = 0,        # if not =0, skip some input data
     source_rtl              = False,    # Use sound card, not RTL-SDR input
-    sp_min                  =-120,      # dB relative to clipping, at bottom of grid
-    sp_max                  =-20,       # dB relative to clipping, at top of grid
+    sp_min                  =-110,      # dB relative to clipping, at bottom of grid
+    sp_max                  =-50,       # dB relative to clipping, at top of grid
     v_min                   =-120,      # palette starts at this level
-    v_max                   =-20,       # palette ends at this level
-    waterfall               = False,    # Using waterfall? T/F
+    v_max                   =-40,       # palette ends at this level
+    waterfall               = True,    # Using waterfall? T/F
     waterfall_accumulation  = 4,        # No. of spectra per waterfall line
     waterfall_palette       = 2         # choose a waterfall color scheme
     )

@@ -33,6 +33,7 @@ def palette_color(palette, val, vmin0, vmax0):
         input: value of data, minimum value, maximum value for transform
         return: pygame color tuple
     """
+    waterfall_colours = [(0, 0, 255), (0, 255, 0), (255, 0, 0)]  # [black, BLUE, GREEN, RED, white]
     f = (float(val) - vmin0) / (vmax0 - vmin0)     # btw 0 and 1.0
     f *= 2
     f = min(1., max(0., f))
@@ -49,10 +50,10 @@ def palette_color(palette, val, vmin0, vmax0):
             b = int((f-.666)*255*3)
     elif palette == 2:
         bright = min (1.0, f + 0.15)
-        tpi = 2 * math.pi
-        r = bright * 128 *(1.0 + math.cos(tpi*f))
-        g = bright * 128 *(1.0 + math.cos(tpi*f + tpi/3))
-        b = bright * 128 *(1.0 + math.cos(tpi*f + 2*tpi/3))
+        tpi = 6.28318530718 # two * pi
+        r = bright * 128 *(1 + math.cos(tpi*f))
+        g = bright * 128 *(1 + math.cos(tpi*f + tpi/3))
+        b = bright * 128 *(1 + math.cos(tpi*f + 2*tpi/3))
     else:
         print "Invalid palette requested!"
         sys.exit()
@@ -84,7 +85,7 @@ class Wf(object):
         self.pixels = list()
         for istep in range(self.nsteps):
             ps = pg.Surface(self.pixel_size)
-            val = float(istep)*(self.vmax-self.vmin)/self.nsteps + self.vmin
+            val = float(istep)*(self.vmax-self.vmin)/self.nsteps + self.vmin 
             color = palette_color(self.opt.waterfall_palette, val, self.vmin, self.vmax)
             ps.fill( color )
             self.pixels.append(ps)

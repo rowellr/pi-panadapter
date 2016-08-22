@@ -264,7 +264,7 @@ def cpu_load(interval):
 # Screen setup parameters
 
 if opt.lcd4:                        # setup for directfb (non-X) graphics
-    SCREEN_SIZE = (480,272)         # default size for the 4" LCD (480x272)
+    SCREEN_SIZE = (480,320)         # default size for the 4" LCD (480x272)
     SCREEN_MODE = pg.FULLSCREEN
     # If we are root, we can set up LCD4 brightness.
     brightness = str(min(100, max(0, opt.lcd4_brightness)))  # validated string
@@ -275,9 +275,9 @@ if opt.lcd4:                        # setup for directfb (non-X) graphics
     subprocess.call(cmd, shell=True)    # invoke shell script
 else:
     SCREEN_MODE = pg.FULLSCREEN if opt.fullscreen else 0
-    SCREEN_SIZE = (640, 512) if opt.waterfall \
-                     else (640,310) # NB: graphics may not scale well
-WF_LINES = 50                      # How many lines to use in the waterfall
+    SCREEN_SIZE = (480, 320) if opt.waterfall \
+                     else (640,320) # NB: graphics may not scale well
+WF_LINES = 100                      # How many lines to use in the waterfall
 
 # Initialize pygame (pg)
 # We should not use pg.init(), because we don't want pg audio functions.
@@ -289,13 +289,13 @@ surf_main = pg.display.set_mode(SCREEN_SIZE, SCREEN_MODE)
 w_main = surf_main.get_width()
 
 # derived parameters
-w_spectra = w_main-10           # Allow a small margin, left and right
+w_spectra = w_main # - 10           # Allow a small margin, left and right
 w_middle = w_spectra/2          # mid point of spectrum
 x_spectra = (w_main-w_spectra) / 2.0    # x coord. of spectrum on screen
 
-h_2d = 2*SCREEN_SIZE[1]/3 if opt.waterfall \
+h_2d = 2*SCREEN_SIZE[1]/5 if opt.waterfall \
             else SCREEN_SIZE[1]         # height of 2d spectrum display
-h_2d -= 25 # compensate for LCD4 overscan?
+#h_2d -= 25 # compensate for LCD4 overscan?
 y_2d = 20. # y position of 2d disp. (screen top = 0)
 
 # NB: transform size must be <= w_spectra.  I.e., need at least one
@@ -320,8 +320,8 @@ led_urun = LED(10)
 led_clip = LED(10)
 
 # Waterfall geometry
-h_wf = SCREEN_SIZE[1]/3         # Height of waterfall (3d spectrum)
 y_wf = y_2d + h_2d              # Position just below 2d surface
+h_wf = SCREEN_SIZE[1]-y_wf        # Height of waterfall (3d spectrum)
 
 # Surface for waterfall (3d) spectrum
 surf_wf = pg.Surface((w_spectra, h_wf))
@@ -337,11 +337,11 @@ smfont = pg.font.SysFont('mono', 9)
 smfont_ht = smfont.get_linesize()
 
 # Define the size of a unit pixel in the waterfall
-wf_pixel_size = (w_spectra/opt.size, h_wf/WF_LINES)
+wf_pixel_size = (1, 1)
 
 # min, max dB for wf palette
 v_min, v_max = opt.v_min, opt.v_max     # lower/higher end (dB)
-nsteps = 50                             # number of distinct colors
+nsteps = 80                             # number of distinct colors
 
 if opt.waterfall:
     # Instantiate the waterfall and palette data
