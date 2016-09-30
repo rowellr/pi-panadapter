@@ -106,7 +106,7 @@ op.set_defaults(
     buffers                 = 12,       # no. buffers in sample chunk (RPi-40)
     control_si570           = False,    # normally, talk to RTL or Hamlib for freq info
     cpu_load_interval       = 3.0,      # cycle time for CPU monitor thread
-    fullscreen              = False,    # Use full screen mode? (if not LCD4)
+    fullscreen              = True,    # Use full screen mode? (if not LCD4)
     hamlib                  = False,    # Using Hamlib? T/F (RPi-False)
     hamlib_device           = "/dev/ttyUSB0",   # Device address for Hamlib I/O
     hamlib_interval         = 1.0,      # Wait between hamlib freq. checks (secs)    
