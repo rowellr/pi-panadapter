@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+ 
 # Program iq.py - spectrum displays from quadrature sampled IF data.
 # Copyright (C) 2013-2014 Martin Ewing
 #
@@ -261,6 +261,13 @@ def cpu_load(interval):
         cpu_usage = [usr, sys, os.getloadavg()[0]]
 
 # Screen setup parameters
+# Initialize pygame (pg)
+# We should not use pg.init(), because we don't want pg audio functions.
+# We also shut off the mouse pointer
+pg.display.init()
+pg.font.init()
+pg.mouse.set_visible(False) # set false to remove the cursor from the screen, not needed why have it.
+
 
 if opt.lcd4:                        # setup for directfb (non-X) graphics
     SCREEN_SIZE = (480,320)         # default size for the 4" LCD (480x272)
@@ -273,21 +280,16 @@ if opt.lcd4:                        # setup for directfb (non-X) graphics
     # (The subprocess script is a no-op if we are not root.)
     subprocess.call(cmd, shell=True)    # invoke shell script
 else:
+    SCREEN_INFO = pg.display.Info()
     SCREEN_MODE = pg.FULLSCREEN if opt.fullscreen else 0
-    SCREEN_SIZE = (800, 480) if opt.waterfall \
-                     else (800,480) # NB: graphics may not scale well
-WF_LINES = 100                      # How many lines to use in the waterfall
+    SCREEN_SIZE = (SCREEN_INFO.current_w,SCREEN_INFO.current_h) if opt.waterfall \
+                     else (0,0) # NB: graphics may not scale well
 
-# Initialize pygame (pg)
-# We should not use pg.init(), because we don't want pg audio functions.
-# We also shut off the mouse pointer
-pg.display.init()
-pg.font.init()
-pg.mouse.set_visible(False) # set false to remove the cursor from the screen, not needed why have it.
+WF_LINES = 100                      # How many lines to use in the waterfall
 
 
 # Define the main window surface
-surf_main = pg.display.set_mode(SCREEN_SIZE, SCREEN_MODE)
+surf_main = pg.display.set_mode(SCREEN_SIZE, pg.FULLSCREEN)
 w_main = surf_main.get_width()
 
 # derived parameters
